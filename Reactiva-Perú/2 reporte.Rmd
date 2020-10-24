@@ -1,6 +1,6 @@
 ---
 title: "Reporte de Reactiva 01"
-author: "BEST"
+author: "César García"
 date: "Realizado el `r format(Sys.time(), '%d %B, %Y')`"
 output:
   html_document:
