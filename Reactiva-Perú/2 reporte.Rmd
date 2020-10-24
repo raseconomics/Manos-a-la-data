@@ -1,0 +1,51 @@
+---
+title: "Reporte de Reactiva 01"
+author: "BEST"
+date: "Realizado el `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    theme: journal
+    toc: yes
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Un título interesante
+
+Aqui algo de texto
+
+```{r configuracion_inicial,echo=FALSE,comment=F,warning=FALSE,message=FALSE}
+library(readxl)
+library(dplyr)
+library(tidyr)
+
+# aquí pon la ruta exacta.
+# Recuerda, entra arriba a: 1 "session", 2 "set working directory" y 3 la opción "to source file location"
+setwd("C:/Users/CÉSAR/Desktop/Curso R/MDv01sesion2_parte-practica-master/MDv01sesion2_parte-practica-master/1 Reactiva Peru"")
+
+empresas_reactiva_peru <- readxl::read_xlsx("empresas.xlsx",skip = 1) #cargamos de nuevo para tener la data en bruto
+empresas_reactiva_peru <- empresas_reactiva_peru[complete.cases(empresas_reactiva_peru$DEPARTAMENTO),-1]
+
+empresas_reactiva_peru[,c(6,7)] <- sapply(empresas_reactiva_peru[,c(6,7)],function(x) round(as.numeric(as.character(x)),2) )
+
+empresas_reactiva_peru <- empresas_reactiva_peru %>%
+                            mutate(nivel_cobertura = round(`MONTO COBERTURA`/`MONTO PRÉSTAMO`*100))
+```
+
+## Práctica dirigida
+
+### Pregunta 1
+
+¿Cuál es el monto promedio de los préstamos otorgados por Reactiva Perú por cada banco y ordenar la data de mayor a menor?
+
+```{r grafico_general, echo=FALSE,fig.height=30,comment=F,warning=FALSE,message=FALSE}
+empresas_reactiva_peru %>% # la BD!
+  group_by(`NOMBRE ENTIDAD OTORGANTE DEL CRÉDITO`) %>% # agrupala segun...
+  summarise(promedio_prestamos=round(mean(`MONTO PRÉSTAMO`),2))%>% # crea una nueva variable
+  arrange(desc(promedio_prestamos))%>% # reordenala de mayor a menor
+  DT::datatable() # mira la data
+```
+
