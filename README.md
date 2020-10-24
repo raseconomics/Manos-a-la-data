@@ -1,3 +1,3 @@
 # Manos-a-la-data
 
-Base de datos del Instituto Nacional de Defensa de la competencia y de la protección de la propiedad intectual
+Base de datos del Instituto Nacional de Defensa de la competencia y de la protección de la propiedad intectual para la exploración e identificación del barreras burocráticas
