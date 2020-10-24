@@ -1,0 +1,185 @@
+---
+title: "Municipalidades"
+author: "César García"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Avance presupuestal histórico de municipalidades de Lima Metropolitana
+
+```{r configuracion_inicial,echo=FALSE,comment=F,warning=FALSE,message=FALSE}
+library(tidyverse)
+municipalidades<-read.csv("https://raw.githubusercontent.com/BESTDATASCIENCE/manos-a-la-data/master/data/2020/2020-03-04/municipalidades.csv")
+```
+
+## Gráfico general
+
+Gráficos de avance presupuestal de cada uno de los 43 distritos de Lima Metropolitana
+
+```{r grafico_general, echo=F,fig.height=30,comment=F,warning=FALSE,message=FALSE}
+municipalidades2 <- municipalidades %>%
+                      filter(PROVINCIA=="MUNICIPALIDAD METROPOLITANA DE LIMA")
+
+p5 <- ggplot(municipalidades2, aes(x = periodo, y = avance))
+(p5 <- p5 + geom_line() +
+      facet_wrap(~Municipalidad, ncol = 2)+
+
+      theme( axis.text = element_text( size = 14 ),
+             axis.text.x = element_text( size = 12 ),
+             axis.title = element_text( size = 14, face = "bold" ),
+             legend.position="none",
+             strip.text = element_text(size = 6))  +
+      labs(title = "Avance presupuestal", subtitle = "Histórico 2007-2019",caption = "Fuente: Consulta Amigable",
+           x="Periodo", y="Avance presupuestal (%)")+ stat_smooth(method=lm))
+```
+
+### Gráfico específico San Juan de Lurigancho
+
+Alcalde de San Juan de Lurigancho es [**Álex Gónzales**](https://munisjl.gob.pe/alcalde.php#:~:text=Alcalde%20%2D%20Municipalidad%20Distrital%20de%20San%20Juan%20de%20Lurigancho&text=%C3%81lex%20Gonz%C3%A1les%20Castillo%20naci%C3%B3%20un%2024%20de%20noviembre%20de%201961.)
+
+```{r ,echo=FALSE,comment=F,warning=FALSE}
+url <- "https://munisjl.gob.pe/imagenes/iconos/logo_fondo_azul.png"
+
+# Googlea y encuentras esto https://stackoverflow.com/questions/28912868/how-to-insert-image-from-url-in-markdown
+municipalidad_lavictoria <- municipalidades %>%
+                      filter(Municipalidad=="MUNICIPALIDAD DISTRITAL DE SAN JUAN DE LURIGANCHO")
+
+p5 <- ggplot(municipalidad_lavictoria, aes(x = periodo, y = avance))
+
+media<-mean(municipalidad_lavictoria$avance)
+mediana<-median(municipalidad_lavictoria$avance)
+maximo<-max(municipalidad_lavictoria$avance)
+minimo<-min(municipalidad_lavictoria$avance)
+desviacion<-sd(municipalidad_lavictoria$avance)
+```
+
+<center><img src="`r url`" height="200px" width="300px" ></center> 
+
+La media del avance de San Juan de Lurigancho es `r media`
+
+La mediana del avance de San Juan de Lurigancho es `r mediana`
+
+El máximo del avance de San Juan de Lurigancho es `r maximo`
+
+El mínimo del avance de San Juan de Lurigancho es `r minimo`
+
+La desviación estándar de San Juan de Lurigancho es `r desviacion`
+
+
+```{r,echo=FALSE,comment=F,warning=FALSE,message=F}
+
+
+(p5 <- p5 + geom_line() +
+            theme( axis.text = element_text( size = 14 ),
+             axis.text.x = element_text( size = 12 ),
+             axis.title = element_text( size = 14, face = "bold" ),
+             legend.position="none",
+             strip.text = element_text(size = 6))  +
+      labs(title = "Avance presupuestal de San Juan de Lurigancho", subtitle = "Histórico 2007-2019",caption = "Fuente: Consulta Amigable",
+           x="Periodo", y="Avance presupuestal (%)")+ stat_smooth(method=lm))
+
+```
+
+
+### Gráfico específico San Martín de Porres
+
+Alcalde de San Martín de Porres es [**Julio Chávez**](https://www.mdsmp.gob.pe/municipalidad.php)
+
+```{r ,echo=FALSE,comment=F,warning=FALSE}
+url <- "https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0022/8895/brand.gif?itok=Hz45ab9o"
+
+# Googlea y encuentras esto https://stackoverflow.com/questions/28912868/how-to-insert-image-from-url-in-markdown
+municipalidad_lavictoria <- municipalidades %>%
+                      filter(Municipalidad=="MUNICIPALIDAD DISTRITAL DE SAN MARTIN DE PORRES")
+
+p5 <- ggplot(municipalidad_lavictoria, aes(x = periodo, y = avance))
+
+media<-mean(municipalidad_lavictoria$avance)
+mediana<-median(municipalidad_lavictoria$avance)
+maximo<-max(municipalidad_lavictoria$avance)
+minimo<-min(municipalidad_lavictoria$avance)
+desviacion<-sd(municipalidad_lavictoria$avance)
+```
+
+<center><img src="`r url`" height="200px" width="300px" ></center> 
+
+La media del avance de San Martín de Porres es `r media`
+
+La mediana del avance de San Martín de Porres es `r mediana`
+
+El máximo del avance de San Martín de Porres es `r maximo`
+
+El mínimo del avance de San Martín de Porres es `r minimo`
+
+La desviación estándar de San Martín de Porres es `r desviacion`
+
+```{r,echo=FALSE,comment=F,warning=FALSE,message=F}
+
+
+(p5 <- p5 + geom_line() +
+            theme( axis.text = element_text( size = 14 ),
+             axis.text.x = element_text( size = 12 ),
+             axis.title = element_text( size = 14, face = "bold" ),
+             legend.position="none",
+             strip.text = element_text(size = 6))  +
+      labs(title = "Avance presupuestal de San Martin de Porres", subtitle = "Histórico 2007-2019",caption = "Fuente: Consulta Amigable",
+           x="Periodo", y="Avance presupuestal (%)")+ stat_smooth(method=lm))
+
+```
+
+
+### Gráfico específico Comas
+
+Alcalde de Comas es [**Raúl Díaz**](https://www.municomas.gob.pe/municipalidad/datos-generales)
+
+
+```{r ,echo=FALSE,comment=F,warning=FALSE}
+url <- "https://3.bp.blogspot.com/-likQA2rnDZk/VfG8t9Q3N6I/AAAAAAAAASw/fjGFPEgYaXs/s1600/118%2BMunicipalidad%2BDe%2BComas.jpg"
+
+# Googlea y encuentras esto https://stackoverflow.com/questions/28912868/how-to-insert-image-from-url-in-markdown
+municipalidad_lavictoria <- municipalidades %>%
+                      filter(Municipalidad=="MUNICIPALIDAD DISTRITAL DE COMAS")
+
+p5 <- ggplot(municipalidad_lavictoria, aes(x = periodo, y = avance))
+
+media<-mean(municipalidad_lavictoria$avance)
+mediana<-median(municipalidad_lavictoria$avance)
+maximo<-max(municipalidad_lavictoria$avance)
+minimo<-min(municipalidad_lavictoria$avance)
+desviacion<-sd(municipalidad_lavictoria$avance)
+```
+
+<center><img src="`r url`" height="200px" width="300px" ></center> 
+
+La media del avance de Comas es `r media`
+
+La mediana del avance de Comas es `r mediana`
+
+El máximo del avance de Comas es `r maximo`
+
+El mínimo del avance de Comas es `r minimo`
+
+La desviación estándar de Comas es `r desviacion`
+
+```{r,echo=FALSE,comment=F,warning=FALSE,message=F}
+
+
+(p5 <- p5 + geom_line() +
+            theme( axis.text = element_text( size = 14 ),
+             axis.text.x = element_text( size = 12 ),
+             axis.title = element_text( size = 14, face = "bold" ),
+             legend.position="none",
+             strip.text = element_text(size = 6))  +
+      labs(title = "Avance presupuestal de Comas", subtitle = "Histórico 2007-2019",caption = "Fuente: Consulta Amigable",
+           x="Periodo", y="Avance presupuestal (%)")+ stat_smooth(method=lm))
+
+```
+
