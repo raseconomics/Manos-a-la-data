@@ -11,7 +11,7 @@ library(parcats)
 library(easyalluvial)
 library(forcats)
 
-setwd("D:/ABCN/Github/sesión3/1 Indecopi")
+setwd("D:/CJGR/Github/sesión3/1 Indecopi")
 barreras <- readxl::read_xls("Data Logros al 31.12.2017.xls",skip = 1)
 
 sapply(barreras,class)
